@@ -1,0 +1,283 @@
+*,
+::before,
+::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+}
+
+*.hidden {
+  display: none !important;
+}
+
+*.clickable {
+  cursor: pointer;
+}
+
+body {
+  --bg-page: #e2e2e236;
+  --bg-form: #e2e2e2;
+  --bg-popup: #fff;
+  --border: #bfbfbf;
+  --active-color:#007BFFFF;
+  font-family: "Noto Sans Mende Kikakui", sans-serif;
+  overflow: hidden;
+}
+body main {
+  width: 100%;
+  height: 100vh;
+  background: var(--bg-page);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+body main .popup {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60vw;
+  max-width: 400px;
+  border-radius: 10px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+}
+@media all and (max-width: 700px) {
+  body main .popup {
+    width: 90vw;
+  }
+}
+body main .popup .scrollable {
+  position: relative;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+body main .popup .scrollable .wrapper {
+  background: var(--bg-popup);
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  transform-origin: center;
+  transform: scale(1) translateX(0);
+  transition: transform 0.5s;
+}
+body main .popup .scrollable .wrapper.see-result {
+  transform: scale(0.9) translateX(-100%);
+}
+body main .popup .scrollable .wrapper img {
+  width: 10%;
+  aspect-ratio: 1;
+}
+body main .popup .scrollable .wrapper .row .geolocation {
+  color: #fff;
+  padding: 0.2em 0.5em;
+  border-radius: 1000px;
+  width: fit-content;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  gap: 0.5em;
+  align-items: center;
+  transform: translateX(0);
+  transition: 0.1s transform;
+}
+body main .popup .scrollable .wrapper .row .geolocation i.fa-solid {
+  animation: 1s infinite rotation;
+  transition: transform 1s;
+}
+@keyframes rotation {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+body main .popup .scrollable .wrapper .row .geolocation input {
+  display: none;
+}
+body main .popup .scrollable .wrapper .row .geolocation span {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  border-radius: 1000px;
+  background: #4484aa;
+}
+body main .popup .scrollable .wrapper .row .geolocation input:checked + span {
+  background: var(--active-color);
+}
+body main .popup .scrollable .wrapper .row .geolocation input:not(:checked) ~ i.fa-solid {
+  display: none;
+}
+body main .popup .scrollable .wrapper .row .geolocation.shake {
+  opacity: 0.5;
+  animation: 0.5s shakes ease-in-out infinite;
+}
+@keyframes shakes {
+  25%, 75% {
+    transform: translateX(1px);
+  }
+  50% {
+    transform: translateX(-1px);
+  }
+}
+body main .popup .scrollable .wrapper .form {
+  background: var(--bg-form);
+  padding: 1em;
+  border-radius: 5px;
+  transition: animation 0.5s;
+}
+body main .popup .scrollable .wrapper .form input {
+  width: 100%;
+  border: 1px solid var(--border);
+  padding: 0.5em;
+  border-radius: 3px;
+  margin: 1em 0;
+}
+body main .popup .scrollable .wrapper .form .flex {
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+}
+body main .popup .scrollable .wrapper .form .flex label {
+  width: 100%;
+}
+body main .popup .scrollable .wrapper .form button {
+  width: 100%;
+  background: var(--active-color);
+  color: var(--bg-popup);
+  border: 0;
+  padding: 0.5em;
+  border-radius: 3px;
+}
+body main .popup .scrollable .wrapper .form button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+body main .popup .scrollable .wrapper .form.shake {
+  animation: 0.5s shake ease-in-out infinite;
+  border: 1px solid #FF2B29;
+}
+@keyframes shake {
+  25%, 75% {
+    transform: rotate(1deg);
+  }
+  50% {
+    transform: rotate(-1deg);
+  }
+}
+body main .popup .scrollable .result {
+  position: absolute;
+  top: 0;
+  left: calc(100% + 1em);
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  background: var(--bg-popup);
+  transition: transform 0.5s;
+  transform: scale(0.9) translateX(0);
+  overflow: hidden;
+}
+body main .popup .scrollable .result .header {
+  width: 100%;
+  background: var(--bg-form);
+  display: flex;
+  justify-content: flex-end;
+  padding: 1em;
+}
+body main .popup .scrollable .result .header .circle {
+  height: 1em;
+  aspect-ratio: 1;
+  border-radius: 10000px;
+  padding: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@media (pointer: fine) {
+  body main .popup .scrollable .result .header .circle:hover {
+    background: var(--border);
+  }
+}
+@media (pointer: coarse) {
+  body main .popup .scrollable .result .header .circle {
+    background: var(--border);
+  }
+}
+body main .popup .scrollable .result .wrapper-result {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+body main .popup .scrollable .result .wrapper-result .main-result {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 1em;
+  gap: 1em;
+}
+body main .popup .scrollable .result .wrapper-result .main-result i {
+  font-size: 5em;
+}
+body main .popup .scrollable .result .wrapper-result .main-result.go-for-it i {
+  color: #38c638;
+}
+body main .popup .scrollable .result .wrapper-result .main-result.stay-at-home i {
+  color: #FF5554;
+}
+body main .popup .scrollable .result .wrapper-result .stats {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+body main .popup .scrollable .result .wrapper-result .stats table {
+  border: 1px solid var(--border);
+}
+body main .popup .scrollable .result .wrapper-result .stats table tr {
+  border: 1px solid var(--border);
+}
+body main .popup .scrollable .result .wrapper-result .stats table tr td {
+  border: 1px solid var(--border);
+}
+body main .popup .scrollable .result.see-result {
+  transform: scale(1) translateX(calc(-100% - 1em));
+}
+body main .popup .more-info {
+  display: flex;
+  border: 1px solid var(--border);
+  position: absolute;
+  z-index: -1;
+  top: calc(100% + 1em);
+  left: 0;
+  width: 100%;
+  border-radius: 10px;
+  padding: 1em;
+  transform: translateY(0);
+  transition: 0.5s;
+  background: var(--bg-popup);
+}
+body main .popup .more-info.hide {
+  transform: translateY(-5em);
+}
+body main .popup .more-info.error {
+  background: #FF5554;
+}
+body main .popup .more-info.error .error {
+  color: #fff;
+}
+
+/*# sourceMappingURL=main.css.map */

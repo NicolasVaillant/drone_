@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mende+Kikakui&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+  <link rel="stylesheet" href="resources/css/main.css">
+  <script src="resources/js/main.js" defer></script>
+  <title>Drone</title>
+</head>
+<body>
+<main>
+  <div class="popup">
+    <div class="scrollable">
+      <div class="wrapper">
+        <img src="resources/img/img.png" alt="drone">
+        <h1>Entrer une adresse</h1>
+        <label for="change-address" class="clickable">
+          <input id="change-address" type="checkbox"> Afficher les coordonnées géographiques
+        </label>
+        <div class="row">
+          <label for="geolocation-toggle" class="geolocation clickable">
+            <input id="geolocation-toggle" type="checkbox">
+            <span></span>
+            <i class="fa-solid fa-circle-notch"></i>
+            Me géolocaliser
+          </label>
+        </div>
+        <div class="form">
+          <div class="address">
+            <p>Entrer une ville pour vérifier les conditions météo.</p>
+            <label for="address-text">
+              <input id="address-text" type="text" placeholder="Ville" class="input-change">
+            </label>
+          </div>
+          <div class="lat-long hidden">
+            <p>Entrer la latitude et la longitude pour vérifier les conditions météo.</p>
+            <div class="flex">
+              <label for="address-lat">
+                <input id="address-lat" type="text" placeholder="Latitude" class="input-change">
+              </label>
+              <label for="address-long">
+                <input id="address-long" type="text" placeholder="Longitude" class="input-change">
+              </label>
+            </div>
+          </div>
+          <button class="send-request clickable">Envoyer</button>
+        </div>
+      </div>
+      <div class="result">
+        <div class="header">
+          <div class="circle clickable close-result">
+            <i class="fa-solid fa-arrow-right"></i>
+          </div>
+        </div>
+        <div class="wrapper-result">
+          <div class="main-result">
+            <i class="check-condition fa-solid"></i>
+            <p class="result-text"></p>
+          </div>
+          <div class="stats"></div>
+        </div>
+      </div>
+    </div>
+    <div class="more-info hide">
+      <p class="error">Données manquantes. Réessayer.</p>
+    </div>
+  </div>
+</main>
+</body>
+</html>
