@@ -87,6 +87,7 @@ close_result.addEventListener('click', (e) => {
     error.parentElement.classList.add('hide')
     wrapper.classList.remove('see-result')
     result.classList.remove('see-result')
+    geolocation_toggle.checked = false
 })
 const check = document.querySelector('.check-condition')
 const result_text = document.querySelector('.result-text')
