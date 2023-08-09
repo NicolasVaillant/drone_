@@ -127,10 +127,22 @@ body{
               border: 0;
               padding: 0.5em;
               border-radius: 3px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              gap: 0.5em;
+              i{
+                animation: 1s infinite rotation;
+                transition: transform 1s;
+                @keyframes rotation {
+                  from{transform: rotate(0)}
+                  to{transform: rotate(360deg)}
+                }
+              }
               &:disabled{
                 opacity: .5;
                 cursor: not-allowed;
-                text-decoration: line-through;
+                text{text-decoration: line-through}
               }
             }
             &.shake{
@@ -257,7 +269,8 @@ body{
         p{
           display: flex;
           align-items: center;
-          gap: 0.5em;
+          gap: .5em;
+          flex-wrap: wrap;
           span{
             padding: 0.1em 0.6em;
             border-radius: 1000px;

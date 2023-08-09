@@ -158,10 +158,28 @@ body main .popup .scrollable .wrapper .form button {
   border: 0;
   padding: 0.5em;
   border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+}
+body main .popup .scrollable .wrapper .form button i {
+  animation: 1s infinite rotation;
+  transition: transform 1s;
+}
+@keyframes rotation {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 body main .popup .scrollable .wrapper .form button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+body main .popup .scrollable .wrapper .form button:disabled text {
   text-decoration: line-through;
 }
 body main .popup .scrollable .wrapper .form.shake {
@@ -311,6 +329,7 @@ body main .popup .more-info p {
   display: flex;
   align-items: center;
   gap: 0.5em;
+  flex-wrap: wrap;
 }
 body main .popup .more-info p span {
   padding: 0.1em 0.6em;

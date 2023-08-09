@@ -42,6 +42,7 @@ geolocation_toggle.addEventListener('change', (e) => {
     }
 })
 const button = document.querySelector('.send-request')
+const icon_button = button.querySelector('i')
 const address_text = document.querySelector('#address-text')
 const address_lat = document.querySelector('#address-lat')
 const address_long = document.querySelector('#address-long')
@@ -54,6 +55,7 @@ button.addEventListener('click', () => {
         //lat-long
         if(address_lat.value.length === 0 || address_long.value.length === 0){displayMessage("Données manquantes. Réessayer.", true, true);return}
         button.disabled = true
+        icon_button.classList.remove('hidden')
         loadData(address_lat.value, address_long.value).then(r => {
             displayMessage(`Résultat trouvé pour <span>${r[0].name}</span>`)
             seeResult(r)
@@ -62,6 +64,7 @@ button.addEventListener('click', () => {
         //address
         if(address_text.value.length === 0){displayMessage("Données manquantes. Réessayer.", true, true);return}
         button.disabled = true
+        icon_button.classList.remove('hidden')
         geocoding(address_text.value).then(json => {
             if(json.length === 0){
                 displayMessage("Aucun résultat. Réassayer.", true)
@@ -78,6 +81,7 @@ button.addEventListener('click', () => {
 input_change.forEach(e => {
     e.addEventListener('keyup', (e) => {
         button.disabled = false
+        icon_button.classList.add('hidden')
     })
 })
 const result = document.querySelector('.result')
@@ -88,6 +92,7 @@ close_result.addEventListener('click', (e) => {
     wrapper.classList.remove('see-result')
     result.classList.remove('see-result')
     geolocation_toggle.checked = false
+    icon_button.classList.add('hidden')
 })
 const check = document.querySelector('.check-condition')
 const result_text = document.querySelector('.result-text')
