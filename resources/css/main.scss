@@ -29,11 +29,13 @@ body{
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 60vw;
-      max-width: 400px;
+      width: 90vw;
       border-radius: 10px;
       box-shadow: rgba(50, 50, 93, 0.25) 0 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
-      @media all and (max-width: 700px) {width: 90vw}
+      @media all and (min-width: 700px) {
+        width: 60vw;
+        max-width: 400px;
+      }
       .scrollable{
         position: relative;
         border: 1px solid var(--border);
