@@ -145,7 +145,8 @@ const loadData = async(lat, long) => {
 }
 const geocoding = async function (city){
     let temp_a = []
-    const url = `http://api.openweathermap.org/geo/1.0/direct?q=${city},250&limit=1&appid=${API_KEY}`
+    const url = `https://api.openweathermap.org/geo/1.0/direct?q=${city},250&limit=1&appid=${API_KEY}`
+    console.log(url)
     return await fetch(url)
         .then((response) => response.json())
         .then((json) => {
@@ -162,7 +163,7 @@ const openweathermap = function (lat, long){
             let min_t = json.main.temp_min;
             let max_t = json.main.temp_max;
             let minmax = `${min_t.toFixed(1)}°C/${max_t.toFixed(1)}°C`;
-            const icon = "http://openweathermap.org/img/wn/" + json.weather[0].icon + "@2x.png";
+            const icon = "https://openweathermap.org/img/wn/" + json.weather[0].icon + "@2x.png";
             temp_a.push({
                 "name": json.name,
                 "description": description,
