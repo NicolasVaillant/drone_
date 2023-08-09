@@ -1,4 +1,4 @@
-const API_KEY = "f104317740713d28a62c8d7b7a8ac89b"
+const API_KEY = ""
 const checkbox = document.querySelector('#change-address')
 const geolocation_toggle = document.querySelector('#geolocation-toggle')
 const geolocation_button = document.querySelector('.geolocation')
