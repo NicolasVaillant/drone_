@@ -5,6 +5,7 @@ const geolocation_button = document.querySelector('.geolocation')
 const container_address = document.querySelector('.address')
 const container_lat_long = document.querySelector('.lat-long')
 const close_result = document.querySelector('.close-result')
+window.onload = function () {}
 checkbox.addEventListener('change', (e) => {
     if(e.target.checked){
         //lat-long
@@ -29,16 +30,14 @@ geolocation_toggle.addEventListener('change', (e) => {
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
         loadData(latitude, longitude).then(r => {
-            console.log(r)
+            displayMessage(`Résultat trouvé pour <span>${r[0].name}</span>`)
+            seeResult(r)
         })
     }
     function error() {
         setTimeout(() => {
             e.target.checked = false
-            geolocation_button.classList.add('shake')
-            setTimeout(() => {
-                geolocation_button.classList.remove('shake')
-            }, 2000)
+            displayMessage("Erreur. Réessayer.", true, false)
         }, 1000)
     }
 })
@@ -56,6 +55,7 @@ button.addEventListener('click', () => {
         if(address_lat.value.length === 0 || address_long.value.length === 0){displayMessage("Données manquantes. Réessayer.", true, true);return}
         button.disabled = true
         loadData(address_lat.value, address_long.value).then(r => {
+            displayMessage(`Résultat trouvé pour <span>${r[0].name}</span>`)
             seeResult(r)
         })
     }else{
@@ -67,7 +67,7 @@ button.addEventListener('click', () => {
                 displayMessage("Aucun résultat. Réassayer.", true)
             }else{
                 const data = json[0]
-                displayMessage(`Résultat trouvé pour ${data.name}, ${data.state} (${data.country})`)
+                displayMessage(`Résultat trouvé pour <span>${data.name}, ${data.state} (${data.country})</span>`)
                 loadData(data.lat, data.lon).then(r => {
                     seeResult(r)
                 })
@@ -84,6 +84,7 @@ const result = document.querySelector('.result')
 const scrollable = document.querySelector('.scrollable')
 const wrapper = document.querySelector('.wrapper')
 close_result.addEventListener('click', (e) => {
+    error.parentElement.classList.add('hide')
     wrapper.classList.remove('see-result')
     result.classList.remove('see-result')
 })
@@ -93,7 +94,6 @@ const main_result = document.querySelector('.main-result')
 const stats = document.querySelector('.stats')
 const seeResult = (fr) => {
     let data = fr[0]
-    console.log(data)
     wrapper.classList.add('see-result')
     result.classList.add('see-result')
     if(data.wind.speed >= 50 || ((data.wind.gust !== undefined || data.wind.gust !== 'undefined') && data.wind.gust >= 50) ){
@@ -105,15 +105,19 @@ const seeResult = (fr) => {
         result_text.innerHTML = 'Les conditions sont favorables.'
         main_result.classList.add('go-for-it')
     }
-    var table = document.createElement('table');
-    for (var i = 0; i < 6; i++) {
-        var row = table.insertRow();
-        for (var j = 0; j < 2; j++) {
-            var cell = row.insertCell();
-            cell.innerHTML = 'Ligne ' + (i + 1) + ', Colonne ' + (j + 1);
+    Object.entries(data).forEach(([key, value]) => {
+        const element = document.querySelector(`.${key}`)
+        if(element !== null){
+            if(key === 'icon'){
+                element.src = value.toString()
+            }else{
+                element.innerHTML = value.toString()
+            }
+            if(key === 'wind'){
+                element.innerHTML = `${value.speed.toString()} km/h, ${value.gust.toString()} km/h`;
+            }
         }
-    }
-    stats.appendChild(table);
+    });
 }
 const displayMessage = (msg, errorState = false, shake = false) => {
     if(shake){
@@ -156,7 +160,7 @@ const openweathermap = function (lat, long){
             let description = json.weather[0].description.charAt(0).toUpperCase() + json.weather[0].description.slice(1)
             let min_t = json.main.temp_min;
             let max_t = json.main.temp_max;
-            let minmax = min_t.toFixed(1) + '/' + max_t.toFixed(1);
+            let minmax = `${min_t.toFixed(1)}°C/${max_t.toFixed(1)}°C`;
             const icon = "http://openweathermap.org/img/wn/" + json.weather[0].icon + "@2x.png";
             temp_a.push({
                 "name": json.name,
@@ -164,11 +168,11 @@ const openweathermap = function (lat, long){
                 "minmax": minmax,
                 "icon": icon,
                 "wind": {
-                    speed: json.wind.speed*3.6,
-                    gust: json.wind.gust
+                    speed: (json.wind.speed !== undefined ? (json.wind.speed*3.6).toFixed(2) : 'Ø'),
+                    gust: (json.wind.gust !== undefined ? json.wind.gust.toFixed(2) : 'Ø')
                 },
                 "clouds": `${json.clouds.all}%`,
-                "visibility":json.visibility
+                "visibility":json.visibility/1000
             })
             return temp_a
         })
